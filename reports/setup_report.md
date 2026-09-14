@@ -1,57 +1,106 @@
-# Task 02.5 — Setup Report
+# Task 02.5 — Status and Provenance Report
 
-## Task
-02.5 — Status and provenance templates
+## Status
 
-## Purpose
-Record the environment setup, configuration provenance, tests, and repository status required before bulk processing.
+Task 02.5 environment and reproducibility checks completed successfully.
 
-## Repository
-Repository: `whiplash-project`
+## Environment
 
-## Configuration
-Configuration file:
+Python:
+3.13.15
 
-`config/protocol_v1.yaml`
+Pinned packages:
 
-Master random seed:
+- numpy==2.1.3
+- pandas==2.2.3
+- scipy==1.16.3
+- xarray==2025.12.0
+- netCDF4==1.7.4
+- h5py==3.16.0
+- geopandas==1.1.4
+- shapely==2.1.2
+- pyproj==3.7.2
+- rasterio==1.5.1
+- scikit-learn==1.6.1
+- matplotlib==3.10.0
+- pyarrow==23.0.1
+- PyYAML==6.0.3
+- pytest==8.4.2
 
-`20260909`
-
-Task-specific seeds were derived deterministically from the master seed and task ID.
-
-## Data Inputs
-No project-scale scientific data were consumed during Task 02.5.
-
-The environment tests use small, temporary synthetic inputs generated during the test run. These files are deleted after testing.
-
-Therefore, no external data checksums are required for this setup-only task.
-
-## Tests
-
-The following environment tests are required:
-
-- CSV write/read
-- Parquet write/read
-- Labeled figure creation
-- Geographic coordinate transformation
-- Deterministic numerical output
+## Functional tests
 
 Test file:
 
 `tests/test_environment.py`
 
-## Expected Test Result
+Command:
 
-All tests should pass successfully before proceeding to bulk processing.
+`pytest -q /content/test_environment.py`
 
-Expected result:
+Result:
 
-`5 passed`
+`5 passed in 2.41s`
 
-## Commands
+Tests passed:
 
-Test command:
+1. CSV write/read
+2. Parquet write/read
+3. Labeled figure creation
+4. Geographic coordinate transformation
+5. Deterministic numerical output
 
-```text
-pytest -q tests/test_environment.py
+## Secure access test
+
+NASA Earthdata authentication was tested successfully.
+
+SMAP collection:
+
+`SPL3SMP_E`, Version `006`
+
+A small SMAP granule search succeeded and one granule was downloaded successfully.
+
+Credentials were not stored in the notebook or repository.
+
+## Secret scan
+
+Command:
+
+`git grep -n -I -E "AKIA[0-9A-Z]{16}|BEGIN (RSA|EC|OPENSSH|DSA) PRIVATE KEY"`
+
+Result:
+
+No matching credentials or private-key patterns were found.
+
+## Provenance
+
+Code commit:
+
+`4272a1a2fba1173782a8676f353c7b10c0b78f14`
+
+Configuration file:
+
+`config/protocol_v1.yaml`
+
+Configuration SHA256:
+
+`1489d22e218a80dd4524f73fda45c066cd9e404afe9f7061c7fe49afd2e22dd9`
+
+Input checksums:
+
+Not applicable to the environment tests. No project data files were used as test inputs.
+
+Outputs:
+
+Temporary CSV, Parquet, and PNG files were created during testing and removed after each test.
+
+Exceptions:
+
+No functional test failures.
+
+## Reviewer status
+
+Pending reviewer verification.
+
+## Task status
+
+PASS — Task 02.5 environment, testing, secure-access, and provenance requirements completed.
