@@ -18,6 +18,11 @@ seed_derivation:
     Task-specific seeds are derived deterministically from the
     fixed master seed and task ID. No unrecorded random state
     may be used.
+  task_seeds:
+    "02.2": 3729226108
+    "02.3": 483786234
+    "02.4": 101614946
+    "02.5": 3686027161
 
 # ------------------------------------------------------------
 # STUDY PERIOD
