@@ -1,30 +1,296 @@
-# Whiplash project configuration
-# NOTE: This is NOT yet the complete frozen Appendix A protocol.
-# Populate the remaining approved protocol values before freezing v1.
+# ============================================================
+# WHIPLASH PROJECT — PROTOCOL CONFIGURATION
+# Task 02.3
+# ============================================================
 
-master_random_seed: 20260909
+protocol_version: "1.0"
 
-daymet:
-  start: "1995-01-01"
-  end: "2020-12-30"
-  n_basins_expected: 629
-  n_cells_expected: 483042
-  cells_per_chunk: 2000
-  n_chunks_expected: 242
-  max_daymet_retries: 5
+# ------------------------------------------------------------
+# REPRODUCIBILITY
+# ------------------------------------------------------------
 
-hugging_face:
-  repo_id: "vidushibhar24/daymet-camels-pixel-1995-2020"
-  repo_type: "dataset"
-  subdir: "chunks"
+master_seed: 20260909
 
-colab:
-  drive_root: "/content/drive/MyDrive/whiplash-project"
+seed_derivation:
+  method: "SHA256"
+  input_format: "{master_seed}:{task_id}"
+  description: >
+    Task-specific seeds are derived deterministically from the
+    fixed master seed and task ID. No unrecorded random state
+    may be used.
+
+# ------------------------------------------------------------
+# STUDY PERIOD
+# ------------------------------------------------------------
+
+reference_start: "1981-01-01"
+reference_end: "2014-12-31"
+
+observation_start: "2015-03-31"
+observation_end: "2024-12-31"
+
+time_basis: "UTC"
+
+# ------------------------------------------------------------
+# BASIN SCREEN
+# ------------------------------------------------------------
+
+basin_area_km2: [2000, 10000]
+
+aridity_min: 0.4
+
+management_class: "GAGES-II reference; later influence reviewed"
+
+irrigation_fraction_max: 0.05
+openwater_fraction_max: 0.05
+wetland_fraction_max: 0.10
+
+# ------------------------------------------------------------
+# DAILY DATA / REFERENCE THRESHOLDS
+# ------------------------------------------------------------
+
+q_required_hours: 24
+
+reference_min_years: 10
+reference_valid_day_fraction: 0.90
+
+seasonal_q_min_samples: 200
+seasonal_halfwindow_days: 15
+
+# ------------------------------------------------------------
+# PRECIPITATION-FIRST EVENT DEFINITION
+# ------------------------------------------------------------
+
+rainy_day_mm: 1.0
+rain_onset_preceding_dry_days: 2
+
+drought_balance_window_days: 30
+drought_percentile: 0.10
+drought_min_run_days: 14
+
+dry_to_pulse_max_intervening_days: 30
+
+pulse_window_days: 7
+pulse_percentile: 0.95
+
+# ------------------------------------------------------------
+# FLOW ELIGIBILITY / OUTCOME
+# ------------------------------------------------------------
+
+antecedent_q_window_days: 7
+low_q7_percentile: 0.20
+
+outcome_window_days: 30
+high_daily_q_percentile: 0.95
+
+# ------------------------------------------------------------
+# RAINFALL-DOMINATED SCREEN
+# ------------------------------------------------------------
+
+swe_max_mm: 1.0
+pulse_daily_mean_tair_min_c: 2.0
+
+# ------------------------------------------------------------
+# SATELLITE / SMAP
+# ------------------------------------------------------------
+
+satellite_product: "SPL3SMP_E.006 official archive"
+satellite_pass: "AM"
+
+satellite_min_area_fraction: 0.50
+satellite_lookback_dates: 5
+
+# ------------------------------------------------------------
+# SATELLITE FILTERING
+# ------------------------------------------------------------
+
+filter_T_days: 45
+filter_sensitivity_T_days: [14, 60]
+
+filter_history_days: 180
+filter_min_observations: 20
+
+filter_recent_window_days: 30
+filter_recent_min_observations: 5
+
+filter_gap_check_window_days: 90
+filter_max_gap_days: 30
+
+satellite_reference_exclude: "event calendar year"
+satellite_reference_halfwindow_days: 30
+satellite_reference_min_observations: 50
+satellite_reference_min_other_years: 5
+
+# ------------------------------------------------------------
+# STORM / EVENT DEPENDENCE
+# ------------------------------------------------------------
+
+storm_max_pairwise_onset_days: 3
+storm_max_pairwise_distance_km: 500
+
+# ------------------------------------------------------------
+# REGIONAL DROUGHT
+# ------------------------------------------------------------
+
+regional_drought_start_fraction: 0.20
+regional_drought_recovery_fraction: 0.10
+regional_drought_persistence_days: 14
+regional_fraction_min_valid_basins: 0.90
+
+# ------------------------------------------------------------
+# SPATIAL / TEMPORAL PURGING
+# ------------------------------------------------------------
+
+purge_nearby_distance_km: 500
+purge_nearby_onset_days: 7
+
+# ------------------------------------------------------------
+# MODELING
+# ------------------------------------------------------------
+
+lambda_grid: [0.001, 0.01, 0.1, 1.0, 10.0]
+
+meaningful_brier_gain: 0.0025
+
+score_bootstrap_draws: 2000
+refit_bootstrap_valid_draws: 500
+
+simulation_replicates_per_scenario: 200
+
+# ------------------------------------------------------------
+# MODEL SET
+# ------------------------------------------------------------
+
+models:
+  - "B"
+  - "B+H"
+  - "B+S"
+  - "B+H+S"
+
+primary_comparison: "B+H+S vs B+S"
+secondary_comparison: "B+H+S vs B+H"
+
+# ------------------------------------------------------------
+# DATA ROOTS
+# These are outside the GitHub repository.
+# ------------------------------------------------------------
 
 paths:
-  pixel_index: "data/daymet_pixel_index_629_basins.csv"
-  daymet_metadata_dir: "data/daymet_chunks_1995_2020"
-  progress_file: "data/daymet_pixel_dataset_1995_2020_NEW.progress.csv"
+  colab_project_root: "/content/drive/MyDrive/whiplash-project"
+  data_root: "/content/drive/MyDrive/whiplash-project/data"
 
-# Local absolute data roots should be added locally and kept out of exported
-# configuration if they are machine-specific.
+  basin_list:
+    "/content/drive/MyDrive/whiplash-project/data/basin_lists/basin_list_v1.txt"
+
+  camels_us:
+    "/content/drive/MyDrive/whiplash-project/data/CAMELS_US"
+
+  streamflow:
+    "/content/drive/MyDrive/whiplash-project/data/streamflow"
+
+  daymet_pixel_index:
+    "/content/drive/MyDrive/whiplash-project/data/daymet_pixel_index_629_basins.csv"
+
+  daymet_chunks:
+    "/content/drive/MyDrive/whiplash-project/data/daymet_chunks_1995_2020"
+
+# ------------------------------------------------------------
+# DAYMET PIXEL WORKFLOW
+# ------------------------------------------------------------
+
+daymet:
+  spatial_representation: "Native Daymet grid; no resampling"
+
+  variables:
+    - "prcp"
+    - "tmax"
+    - "tmin"
+    - "pet"
+
+  pet_method: "Hargreaves-Samani"
+
+  time_start: "1995-01-01"
+  time_end: "2020-12-30"
+
+  basin_count: 629
+
+  pixel_index:
+    "daymet_pixel_index_629_basins.csv"
+
+# ------------------------------------------------------------
+# HUGGING FACE
+# ------------------------------------------------------------
+
+hugging_face:
+  repository: "vidushibhar24/daymet-camels-pixel-1995-2020"
+  repository_type: "dataset"
+  private: true
+
+# ------------------------------------------------------------
+# SOURCE IDENTIFIERS
+#
+# Exact releases that have not yet been verified through the
+# metadata audit are intentionally marked pending.
+# ------------------------------------------------------------
+
+sources:
+
+  camels:
+    name: "CAMELS-US"
+    status: "source used; exact release metadata to be recorded"
+
+  camelsh:
+    name: "CAMELSH"
+    observed_flow_version: "v6"
+    status: "source metadata to be recorded"
+
+  daymet:
+    name: "Daymet Daily North America"
+    collection: "daymet-daily-na"
+    spatial_representation: "Native Daymet grid; no resampling"
+    source: "Microsoft Planetary Computer / ORNL DAAC"
+    status: "source identified; exact resolved release metadata to be recorded"
+
+  smap:
+    product: "SPL3SMP_E.006"
+    pass: "AM"
+    status: "Earthdata metadata audit pending"
+
+  nldas2:
+    name: "NLDAS-2"
+    status: "exact source release metadata to be recorded"
+
+  era5_land:
+    name: "ERA5-Land"
+    status: "sensitivity source; exact resolved release metadata to be recorded"
+
+# ------------------------------------------------------------
+# PROVENANCE
+# ------------------------------------------------------------
+
+provenance:
+  required_fields:
+    - "input_checksums"
+    - "configuration_hash"
+    - "code_commit"
+    - "command_used"
+    - "outputs"
+    - "tests"
+    - "exceptions"
+    - "reviewer_status"
+
+  timestamp_is_deadline: false
+
+# ------------------------------------------------------------
+# COMPARISON OPERATORS
+# These inequalities are part of the protocol.
+# ------------------------------------------------------------
+
+operators:
+  drought_balance: "<"
+  rain_onset: ">="
+  wet_pulse: ">"
+  antecedent_q7: "<="
+  high_daily_q: ">"
+  satellite_coverage: ">="
+  pulse_mean_daily_temperature: ">"
