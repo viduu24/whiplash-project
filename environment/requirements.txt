@@ -1,0 +1,13 @@
+# Starting requirements for the Daymet extraction workflow.
+# Task 02.2 still requires recording the exact tested/pinned environment.
+
+numpy
+pandas
+xarray
+pystac-client
+planetary-computer
+zarr
+fsspec
+adlfs
+huggingface_hub
+hf_xet

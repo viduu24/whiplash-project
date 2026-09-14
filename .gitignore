@@ -1,0 +1,121 @@
+# ============================================================
+# WHIPLASH PROJECT - GITHUB SAFE
+# ============================================================
+
+# Python / notebooks
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Secrets / credentials
+.env
+.env.*
+!.env.example
+.netrc
+_netrc
+credentials.json
+credentials.yaml
+credentials.yml
+*credentials*
+*secret*
+*token*
+*password*
+earthdata_credentials*
+earthaccess_credentials*
+*.pem
+*.key
+*.crt
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs / temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# Large scientific data
+*.nc
+*.nc4
+*.cdf
+*.nc.gz
+*.h5
+*.hdf
+*.hdf4
+*.hdf5
+*.tif
+*.tiff
+*.img
+*.vrt
+*.grib
+*.grib2
+*.parquet
+*.feather
+*.pkl
+*.pickle
+*.joblib
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
+
+# Project data: keep README files, ignore actual data
+data/raw/*
+!data/raw/README.md
+data/interim/*
+!data/interim/README.md
+data/analysis/*
+!data/analysis/README.md
+
+# Large/generated files anywhere under data
+data/**/*.nc
+data/**/*.nc4
+data/**/*.h5
+data/**/*.hdf
+data/**/*.tif
+data/**/*.tiff
+data/**/*.parquet
+
+# Existing test/generated datasets
+data/TEST_*
+data/test_*
+
+# Large model/output directories
+models/*
+predictions/*
+uncertainty/*
+!models/.gitkeep
+!predictions/.gitkeep
+!uncertainty/.gitkeep
+
+# Generated image files
+figures/main/*.png
+figures/main/*.jpg
+figures/main/*.jpeg
+figures/main/*.tif
+figures/main/*.tiff
+figures/supplement/*.png
+figures/supplement/*.jpg
+figures/supplement/*.jpeg
+figures/supplement/*.tif
+figures/supplement/*.tiff
+
+# Generated/exported files
+*.html
+*.csv~
+*.xlsx~

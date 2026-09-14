@@ -1,0 +1,30 @@
+# Whiplash project configuration
+# NOTE: This is NOT yet the complete frozen Appendix A protocol.
+# Populate the remaining approved protocol values before freezing v1.
+
+master_random_seed: 20260909
+
+daymet:
+  start: "1995-01-01"
+  end: "2020-12-30"
+  n_basins_expected: 629
+  n_cells_expected: 483042
+  cells_per_chunk: 2000
+  n_chunks_expected: 242
+  max_daymet_retries: 5
+
+hugging_face:
+  repo_id: "vidushibhar24/daymet-camels-pixel-1995-2020"
+  repo_type: "dataset"
+  subdir: "chunks"
+
+colab:
+  drive_root: "/content/drive/MyDrive/whiplash-project"
+
+paths:
+  pixel_index: "data/daymet_pixel_index_629_basins.csv"
+  daymet_metadata_dir: "data/daymet_chunks_1995_2020"
+  progress_file: "data/daymet_pixel_dataset_1995_2020_NEW.progress.csv"
+
+# Local absolute data roots should be added locally and kept out of exported
+# configuration if they are machine-specific.

@@ -1,0 +1,4 @@
+source,location_or_identifier,role,status
+Daymet v4,Planetary Computer Daymet collection,Daily precipitation/tmax/tmin,used
+CAMELS/CAMELSH,Google Drive project data,Basin geometry/attributes/streamflow,used
+Daymet pixel chunks,Hugging Face dataset vidushibhar24/daymet-camels-pixel-1995-2020,Large extracted pixel data,used

@@ -1,0 +1,29 @@
+name: whiplash
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - numpy
+  - pandas
+  - scipy
+  - xarray
+  - netcdf4
+  - h5py
+  - geopandas
+  - shapely
+  - pyproj
+  - rasterio
+  - scikit-learn
+  - matplotlib
+  - pyarrow
+  - pyyaml
+  - pytest
+  - pip
+  - pip:
+      - pystac-client
+      - planetary-computer
+      - zarr
+      - fsspec
+      - adlfs
+      - huggingface_hub
+      - hf_xet
