@@ -1,0 +1,11 @@
+stage,input_n,output_n,notes
+canonical_basin_list,629,629,Unique canonical GAGEIDs
+area_screen,629,48,Area screen 2000-10000 km2
+GAGESII_reference_screen,48,48,CLASS=Ref
+irrigation_screen,48,45,Irrigation <=5 percent
+open_water_screen,45,42,Open water <=5 percent
+wetlands_screen,42,40,Wetlands <=10 percent
+all_explicit_landcover_screens,48,33,33 retained after explicit percentage screens
+management_screen,33,33,21 keep and 12 unknown; no exclusions
+NOAA_region_assignment,33,33,33 of 33 assigned across 9 regions
+final_audit,48,33,33 retained; 15 land-cover failures; no ID/geometry/area/management/attribute failures
