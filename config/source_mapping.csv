@@ -1,4 +1,11 @@
-source,location_or_identifier,role,status
-Daymet v4,Planetary Computer Daymet collection,Daily precipitation/tmax/tmin,used
-CAMELS/CAMELSH,Google Drive project data,Basin geometry/attributes/streamflow,used
-Daymet pixel chunks,Hugging Face dataset vidushibhar24/daymet-camels-pixel-1995-2020,Large extracted pixel data,used
+canonical_variable,source,source_field,units,missing_code,sign_convention,time_bounds,quality_flag,conversion,status
+Q,CAMELSH observed flow / CAMELS-US sample,QObs / observed streamflow,cfs in source; convert to mm/day,Pending direct sample-file read,Observed discharge; negative/invalid values treated as missing per protocol,CAMELSH: 1980-01-01 to 2024-12-31 23:00,CAMELSH streamflow QC information,q_mm_day = 86.4 * q_cfs / area_km2,Source and file family verified; exact field/missing-code audit pending
+P,NLDAS-2,prcp,mm/day,Pending direct sample-file read,Accumulated precipitation depth,1980-present source; study period restricted by protocol,Source-defined,None,Source verified
+Tair,NLDAS-2,"tmax, tmin",deg C,Pending direct sample-file read,Temperature,1980-present source; study period restricted by protocol,Source-defined,Already represented in deg C in CAMELSH forcing,Source verified
+SWE,CAMELS forcing,swe,mm,Pending direct sample-file read,Snow water equivalent,1980-01-01 to 2014-12-31 for CAMELS time series,Source-defined,None,Source/file family identified
+PET,Derived,Hargreaves-Samani using Tair,mm/day,Derived from valid temperature inputs,Positive evapotranspiration depth,Study period,Input-dependent,Hargreaves-Samani,Derived variable; not treated as native NLDAS field
+SM,SMAP SPL3SMP_E V006,soil_moisture,Product-defined volumetric units,Pending V006 direct sample-file audit,Soil moisture,2015-03-31 to 2024-12-31 study overlap,SMAP retrieval/surface quality flags,Product-defined,Product/version verified
+retrieval_quality,SMAP SPL3SMP_E V006,Product retrieval/surface quality flags,Categorical flag,Product-defined,Product-defined,2015-03-31 to 2024-12-31 study overlap,Required,None,Flag family verified; exact values pending direct granule audit
+acquisition_time,SMAP SPL3SMP_E V006,Product acquisition-time field,Product-defined time,Product-defined,Product-defined,2015-03-31 to 2024-12-31 study overlap,Product-defined,Map to daily UTC,Required field identified
+basin_id,CAMELS/CAMELSH,gauge_id / WatershedID,Identifier,None expected,Identifier,N/A,N/A,Standardize identifier format,Verified
+basin_area,CAMELS topo / CAMELSH,area_gages2 / study-specific basin area,km2,Source-defined,Positive area,N/A,Source-defined,Used for Q conversion to mm/day,Verified source fields
