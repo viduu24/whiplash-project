@@ -1,0 +1,20 @@
+metric,value
+retained_basins,33
+study_start,1995-01-01
+study_end,2010-12-31
+expected_daily_records,192852
+complete_24h_daily_records,146732
+incomplete_daily_records,46120
+overall_q_completeness_percent,76.0853
+overall_runoff_depth_completeness_percent,73.7664
+negative_hourly_q,0
+duplicate_hourly_timestamps,0
+basins_with_confirmed_area_gages2,32
+basins_missing_area,1
+missing_area_basin,06775500
+q_observations,146732
+runoff_depth_observations,142260
+negative_daily_q,0
+negative_runoff_depth,0
+zero_daily_q_count,3945
+validation_status,PASSED FINAL VALIDATION
