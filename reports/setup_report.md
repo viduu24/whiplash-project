@@ -7,7 +7,8 @@ Task 02.5 environment and reproducibility checks completed successfully.
 ## Environment
 
 Python:
-3.13.15
+
+`3.13.15`
 
 Pinned packages:
 
@@ -35,11 +36,19 @@ Test file:
 
 Command:
 
-`pytest -q /content/test_environment.py`
+`python -m pytest -q tests\test_environment.py`
 
 Result:
 
-`5 passed in 2.41s`
+`5 passed, 1 warning in 2.51s`
+
+The warning was:
+
+`pyproj unable to set PROJ database path.`
+
+The coordinate transformation test nevertheless passed after explicitly configuring the PROJ data directory to the active conda environment:
+
+`%CONDA_PREFIX%\Library\share\proj`
 
 Tests passed:
 
@@ -49,41 +58,31 @@ Tests passed:
 4. Geographic coordinate transformation
 5. Deterministic numerical output
 
-## Secure access test
-
-NASA Earthdata authentication was tested successfully.
-
-SMAP collection:
-
-`SPL3SMP_E`, Version `006`
-
-A small SMAP granule search succeeded and one granule was downloaded successfully.
-
-Credentials were not stored in the notebook or repository.
-
 ## Secret scan
 
 Command:
 
-`git grep -n -I -E "AKIA[0-9A-Z]{16}|BEGIN (RSA|EC|OPENSSH|DSA) PRIVATE KEY"`
+`git grep -n -I -E "(password|passwd|api[_-]?key|secret|token|access[_-]?key|private[_-]?key|BEGIN (RSA|OPENSSH|EC|DSA) PRIVATE KEY)"`
 
 Result:
 
-No matching credentials or private-key patterns were found.
+No actual credentials or private keys were identified.
+
+The matches returned by the scan were documentation, `.gitignore` patterns, and notebook references to token handling; no credential values were present.
 
 ## Provenance
 
-Code commit:
+Code commit containing the environment-test fix:
 
-`4272a1a2fba1173782a8676f353c7b10c0b78f14`
+`d8fc152`
+
+Full commit:
+
+`d8fc152 Fix PROJ path in environment test`
 
 Configuration file:
 
 `config/protocol_v1.yaml`
-
-Configuration SHA256:
-
-`1489d22e218a80dd4524f73fda45c066cd9e404afe9f7061c7fe49afd2e22dd9`
 
 Input checksums:
 
@@ -95,7 +94,13 @@ Temporary CSV, Parquet, and PNG files were created during testing and removed af
 
 Exceptions:
 
-No functional test failures.
+Initial coordinate transformation test failed because the PROJ database was not available to the pytest process.
+
+The PROJ database was confirmed to exist at:
+
+`%CONDA_PREFIX%\Library\share\proj\proj.db`
+
+The test was updated to explicitly configure the PROJ data directory. The full functional test suite subsequently passed.
 
 ## Reviewer status
 
@@ -103,4 +108,4 @@ Pending reviewer verification.
 
 ## Task status
 
-PASS — Task 02.5 environment, testing, secure-access, and provenance requirements completed.
+PASS — Task 02.5 environment, testing, secret-scan, and provenance requirements completed.
