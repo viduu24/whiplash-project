@@ -1,4 +1,0 @@
-source,doi,title,files,file_size_bytes,md5,notes
-CAMELSH observed streamflow,10.5281/zenodo.16729675,CAMELSH,Hourly2.zip,4176462827,8bab1c99329db3fa6b1b6cb464a2a573,Hourly observed streamflow/water level NetCDF; 1980-01-01 through 2024-12-31 23:00
-CAMELSH NLDAS-2,10.5281/zenodo.15066778,CAMELSH NLDAS2,timeseries.7z; attributes.7z; info.csv; shapefiles.7z,21247136353,68faf47c89cb96c513e89343f87f3f0e,NLDAS-2 forcing and associated metadata
-CAMELSH ERA5-Land,10.5281/zenodo.15264813,CAMELSH ERA5 Land,CAMELSH_shapefile.7z; Description_ERA5-Land_CAMELSH.pdf; ERA5-Land time-series archives; Readme.md,0,,ERA5-Land 1980-2025 source record; multiple large time-series archives
