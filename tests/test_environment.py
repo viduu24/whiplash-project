@@ -57,6 +57,17 @@ def test_labeled_figure():
 
 
 def test_coordinate_transformation():
+    import pyproj
+
+    proj_data = os.path.join(
+        os.environ["CONDA_PREFIX"],
+        "Library",
+        "share",
+        "proj",
+    )
+
+    pyproj.datadir.set_data_dir(proj_data)
+
     transformer = Transformer.from_crs(
         "EPSG:4326",
         "EPSG:3857",
