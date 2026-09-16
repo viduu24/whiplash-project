@@ -1,49 +1,49 @@
-basin_id,geometry_area_km2,retained,excluded,first_exclusion_reason,status,population_label
-01013500,2302.2892474711175,True,False,,primary_population,Retained
-01030500,3673.86425895796,False,True,land_cover,excluded,Excluded
-02314500,2808.0241341924775,False,True,land_cover,excluded,Excluded
-02315500,5914.52793732891,False,True,land_cover,excluded,Excluded
-03164000,2959.409900515977,True,False,,primary_population,Retained
-03213700,2428.8170870742865,True,False,,primary_population,Retained
-04056500,2982.0868509480215,False,True,land_cover,excluded,Excluded
-04124000,2287.7720317100516,False,True,land_cover,excluded,Excluded
-05056000,5646.832262917326,True,False,,primary_population,Retained
-05057000,8134.198776915601,False,True,land_cover,excluded,Excluded
-05062500,2435.314566488782,False,True,land_cover,excluded,Excluded
-05123400,3219.3566905146454,False,True,land_cover,excluded,Excluded
-05129115,2371.156927043715,False,True,land_cover,excluded,Excluded
-05131500,4340.193429097903,False,True,land_cover,excluded,Excluded
-05412500,4021.8041392654222,True,False,,primary_population,Retained
-05514500,2407.067689623717,False,True,land_cover,excluded,Excluded
-05585000,3366.533578466846,True,False,,primary_population,Retained
-06043500,2119.94890369152,True,False,,primary_population,Retained
-06191500,6804.670665826896,False,True,land_cover,excluded,Excluded
-06339500,3156.0888723855983,True,False,,primary_population,Retained
-06353000,4599.61638564611,True,False,,primary_population,Retained
-06441500,8135.171015862946,True,False,,primary_population,Retained
-06450500,4069.8007473350085,True,False,,primary_population,Retained
-06453600,2103.624094919938,True,False,,primary_population,Retained
-06464500,2922.684143465981,True,False,,primary_population,Retained
-06468170,2832.4076084878493,True,False,,primary_population,Retained
-06775500,7314.887075411649,True,False,,primary_population,Retained
-06784000,6381.170661323609,False,True,land_cover,excluded,Excluded
-06846500,4350.418873635342,False,True,land_cover,excluded,Excluded
-07014500,3847.9337043683086,True,False,,primary_population,Retained
-07056000,2146.326445845695,True,False,,primary_population,Retained
-07067000,4337.193640059012,True,False,,primary_population,Retained
-07068000,5305.948205657661,True,False,,primary_population,Retained
-07071500,2028.4775198678578,True,False,,primary_population,Retained
-07148400,2558.1620800495793,True,False,,primary_population,Retained
-07149000,2262.6052872140026,True,False,,primary_population,Retained
-07151500,2111.1239420230513,True,False,,primary_population,Retained
-07226500,5243.599704934114,True,False,,primary_population,Retained
-07292500,2075.654096375625,True,False,,primary_population,Retained
-07301500,6882.091679396401,True,False,,primary_population,Retained
-08079600,3512.2174460780534,False,True,land_cover,excluded,Excluded
-08164000,2119.4456263229977,True,False,,primary_population,Retained
-09430500,4804.446572973722,True,False,,primary_population,Retained
-12358500,2916.4355314882646,True,False,,primary_population,Retained
-12414500,2660.4244006152658,True,False,,primary_population,Retained
-13337000,3050.4291851355497,True,False,,primary_population,Retained
-13338500,3023.7355114443903,True,False,,primary_population,Retained
-13340600,3353.5064903959033,True,False,,primary_population,Retained
+basin_id,NOAA_REGION,assigned_region_fraction,assigned_region_percent,geometry_area_km2,management_decision,management_unknown,primary_population,population_label,first_exclusion_reason,exclude_landcover
+01013500,Northeast,0.999999999999999,99.9999999999999,2302.2892474711175,keep,False,True,retained,,False
+01030500,,,,3673.86425895796,,False,False,excluded,land-cover screens,True
+02314500,,,,2808.0241341924775,,False,False,excluded,land-cover screens,True
+02315500,,,,5914.52793732891,,False,False,excluded,land-cover screens,True
+03164000,Southeast,0.9997665086967995,99.97665086967996,2959.409900515977,keep,False,True,retained,,False
+03213700,Ohio Valley,0.8457194040502222,84.57194040502222,2428.8170870742865,keep,False,True,retained,,False
+04056500,,,,2982.0868509480215,,False,False,excluded,land-cover screens,True
+04124000,,,,2287.7720317100516,,False,False,excluded,land-cover screens,True
+05056000,Northern Rockies and Plains,1.0,100.0,5646.832262917326,keep,False,True,retained,,False
+05057000,,,,8134.198776915601,,False,False,excluded,land-cover screens,True
+05062500,,,,2435.314566488782,,False,False,excluded,land-cover screens,True
+05123400,,,,3219.3566905146454,,False,False,excluded,land-cover screens,True
+05129115,,,,2371.156927043715,,False,False,excluded,land-cover screens,True
+05131500,,,,4340.193429097903,,False,False,excluded,land-cover screens,True
+05412500,Upper Midwest,1.0,100.0,4021.8041392654222,keep,False,True,retained,,False
+05514500,,,,2407.067689623717,,False,False,excluded,land-cover screens,True
+05585000,Upper Midwest,1.0000000000000007,100.00000000000007,3366.533578466846,unknown,True,True,retained,,False
+06043500,Northern Rockies and Plains,1.0000000000000007,100.00000000000007,2119.94890369152,unknown,True,True,retained,,False
+06191500,,,,6804.670665826896,,False,False,excluded,land-cover screens,True
+06339500,Northern Rockies and Plains,0.9999999999999994,99.99999999999994,3156.0888723855983,unknown,True,True,retained,,False
+06353000,Northern Rockies and Plains,1.0000000000000027,100.00000000000027,4599.61638564611,unknown,True,True,retained,,False
+06441500,Northern Rockies and Plains,0.9999999999999996,99.99999999999996,8135.171015862946,unknown,True,True,retained,,False
+06450500,Northern Rockies and Plains,1.0000000000000009,100.00000000000009,4069.8007473350085,unknown,True,True,retained,,False
+06453600,Northern Rockies and Plains,1.0000000000000002,100.00000000000003,2103.624094919938,unknown,True,True,retained,,False
+06464500,Northern Rockies and Plains,0.9999999999999992,99.99999999999993,2922.684143465981,unknown,True,True,retained,,False
+06468170,Northern Rockies and Plains,0.999999999999998,99.9999999999998,2832.4076084878493,keep,False,True,retained,,False
+06775500,Northern Rockies and Plains,0.9999999999999986,99.99999999999986,7314.887075411649,keep,False,True,retained,,False
+06784000,,,,6381.170661323609,,False,False,excluded,land-cover screens,True
+06846500,,,,4350.418873635342,,False,False,excluded,land-cover screens,True
+07014500,Northern Rockies and Plains,1.0000000000000007,100.00000000000007,3847.9337043683086,unknown,True,True,retained,,False
+07056000,South,1.0000000000000004,100.00000000000004,2146.326445845695,keep,False,True,retained,,False
+07067000,Northern Rockies and Plains,1.0000000000000022,100.00000000000023,4337.193640059012,keep,False,True,retained,,False
+07068000,Northern Rockies and Plains,1.0000000000000024,100.00000000000024,5305.948205657661,keep,False,True,retained,,False
+07071500,Northern Rockies and Plains,0.9999999999999984,99.99999999999984,2028.4775198678578,keep,False,True,retained,,False
+07148400,Northern Rockies and Plains,0.7388442016965169,73.88442016965169,2558.1620800495793,keep,False,True,retained,,False
+07149000,Northern Rockies and Plains,1.0000000000000004,100.00000000000004,2262.6052872140026,keep,False,True,retained,,False
+07151500,Northern Rockies and Plains,1.0000000000000004,100.00000000000004,2111.1239420230513,keep,False,True,retained,,False
+07226500,Southwest,1.0000000000000004,100.00000000000004,5243.599704934114,unknown,True,True,retained,,False
+07292500,Southeast,0.9999999999999997,99.99999999999997,2075.654096375625,keep,False,True,retained,,False
+07301500,South,0.9999999999999999,99.99999999999999,6882.091679396401,keep,False,True,retained,,False
+08079600,,,,3512.2174460780534,,False,False,excluded,land-cover screens,True
+08164000,South,0.9999999999999991,99.99999999999991,2119.4456263229977,unknown,True,True,retained,,False
+09430500,Southwest,1.0000000000000007,100.00000000000007,4804.446572973722,unknown,True,True,retained,,False
+12358500,Northern Rockies and Plains,0.9999999999999976,99.99999999999976,2916.4355314882646,keep,False,True,retained,,False
+12414500,Northwest,0.9996716485182118,99.96716485182118,2660.4244006152658,keep,False,True,retained,,False
+13337000,Northwest,0.9994861376395062,99.94861376395062,3050.4291851355497,keep,False,True,retained,,False
+13338500,Northwest,1.0,100.0,3023.7355114443903,keep,False,True,retained,,False
+13340600,Northwest,0.9997525457648707,99.97525457648707,3353.5064903959033,keep,False,True,retained,,False
