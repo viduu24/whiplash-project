@@ -2,149 +2,325 @@
 
 ## Status
 
-Task 03 metadata, source inventory, deterministic sample selection, and canonical variable mapping were completed.
+Task 03 source audit is in progress with direct inspection completed for the primary
+sample source files and one SMAP V006 AM granule.
 
-## 03.1 — Source metadata and inventory
+No source field, missing-value code, quality flag, or uncertainty interpretation was
+invented when it was not documented by the inspected source.
 
-### CAMELSH observed streamflow
+---
 
-- DOI: 10.5281/zenodo.16729675
-- Record: CAMELSH observed streamflow
-- Archive: `Hourly2.zip`
-- Archive size: 4,176,462,827 bytes
-- MD5: `8bab1c99329db3fa6b1b6cb464a2a573`
-- Coverage: 1980-01-01 through 2024-12-31 23:00
-- Data type: observed streamflow/water-level NetCDF
-- Observed discharge is distinguished from modeled/reanalysis runoff.
+## 1. Observed streamflow
 
-### CAMELSH NLDAS-2
+### Source
 
-- DOI: 10.5281/zenodo.15066778
-- Files include:
-  - `timeseries.7z`
-  - `attributes.7z`
-  - `info.csv`
-  - `shapefiles.7z`
-- NLDAS-2 forcing source verified.
+CAMELS-US observed USGS streamflow archive:
 
-### CAMELSH ERA5-Land
+`basin_dataset_public_v1p2/usgs_streamflow/{HUC}/{GAGEID}_streamflow_qc.txt`
 
-- DOI: 10.5281/zenodo.15264813
-- Files include the CAMELSH shapefile, description PDF, ERA5-Land time-series archives, and README.
-- ERA5-Land source record verified.
+Representative inspected file:
 
-### SMAP
+`basin_dataset_public_v1p2/usgs_streamflow/01/01013500_streamflow_qc.txt`
 
-- Product: `SPL3SMP_E`
-- Version: 006
-- Source ID: `SMAP_SPL3SMP_E_V006`
-- Early granules inspected in inventory:
-  - 2015-03-31
-  - 2015-04-01
-  - 2015-04-02
-- Later granules inspected in inventory:
-  - 2024-12-20
-  - 2024-12-21
-  - 2024-12-22
+### Direct inspection
 
-## 03.2 — Outcome-blind sample
+The file contains 12,784 daily records with five fields:
 
-Three CAMELS-US basins were selected deterministically by gauge-ID ordering:
+1. GAGEID
+2. Year
+3. Month
+4. Day
+5. Streamflow (cubic feet per second)
+6. QC_flag
 
-| Position | Gauge ID | HUC-02 | Basin |
-|---:|---|---:|---|
-| 0 | 01013500 | 01 | Fish River near Fort Kent, Maine |
-| 335 | 06278300 | 10 | Shell Creek above Shell Creek Reservoir, Wyoming |
-| 670 | 14400000 | 17 | Chetco River near Brookings, Oregon |
+The source README confirms that the files contain five data columns after the
+identifier/date fields and identifies streamflow units as cubic feet per second.
 
-Selection was based on identifier ordering only and was not based on flood behavior or known outcomes.
+### Missing values
 
-## CAMELS metadata verification
+The official streamflow README specifies:
 
-The three sample basins were successfully located in CAMELS metadata.
+- `-999.0` = missing streamflow
+- `A` = USGS-certified actual daily mean flow
+- `A:e` = USGS-certified estimated daily mean flow
+- `M` = missing from USGS record
 
-Verified fields include:
+The inspected sample contained:
 
-- `gauge_id`
-- `huc_02`
-- `gauge_name`
-- `gauge_lat`
-- `gauge_lon`
-- `area_gages2`
-- precipitation and PET climatology
-- hydrologic characteristics
+- `A`: 9,724 records
+- `A:e`: 2,968 records
+- `M`: 92 records
+- `-999.0`: 92 discharge values
 
-Important limitation: the CAMELS 671-basin standard attributes do not provide all final study-screening fields required by the proposal (for example, exact AI, irrigation, open-water, and wetland screening variables). CAMELS attributes are therefore not used as substitutes for the required GAGES-II/CAMELSH eligibility fields.
+Therefore `-999.0` will be converted to missing during processing.
+Zero discharge values will not be converted to missing.
 
-## 03.3 — Canonical variable mapping
+The source is observed USGS discharge, not stage, reanalysis runoff, or model
+simulation.
 
-The canonical mappings are stored separately in:
+---
 
-`config/source_mapping.csv`
+## 2. NLDAS-2 basin mean forcing
 
-Required variables include:
+### Source
 
-- Q
-- P
-- PET
-- Tair
-- SWE
-- SM
-- retrieval quality
-- acquisition time
-- basin ID
-- basin area
+CAMELS-US NLDAS basin mean forcing:
 
-No undocumented surrogate field was substituted for a required source variable.
+`basin_dataset_public_v1p2/basin_mean_forcing/nldas/{HUC}/{GAGEID}_lump_nldas_forcing_leap.txt`
 
-## 03.4 — Quality and uncertainty fields
+Representative inspected file:
 
-SMAP retrieval and surface-quality flag families were identified from the V006 product documentation.
+`basin_dataset_public_v1p2/basin_mean_forcing/nldas/01/01013500_lump_nldas_forcing_leap.txt`
 
-The following items remain pending direct sample-granule inspection:
+### Direct inspection
 
-- exact SMAP soil-moisture fill value
-- exact retrieval flag values
-- exact acquisition-time field encoding
-- finite/non-fill count for `soil_moisture_error`
+The inspected file has a four-line header followed by daily forcing records.
 
-These values were not fabricated or inferred.
+The observed fourth-line field structure is:
 
-The protocol requirement remains that fill values represent missing data and are not converted to zero.
+`Year Mnth Day Hr Dayl PRCP SRAD SWE Tmax Tmin Vp`
 
-## 03.5 — Practical data handling
+The directly observed units/meanings are:
 
-Large national archives are not loaded into memory as a whole.
+- `Dayl`: seconds
+- `PRCP`: mm/day
+- `SRAD`: W/m2
+- `SWE`: mm
+- `Tmax`: degrees C
+- `Tmin`: degrees C
+- `Vp`: Pa
 
-Verified archive handling includes:
+The CAMELS basin mean forcing README states that Daymet, Maurer, and NLDAS are
+distinct forcing datasets provided at a daily timestep.
 
-- CAMELSH observed-flow archive: approximately 3.9 GB
-- CAMELSH NLDAS-2 time-series archive: approximately 19.8 GB
-- CAMELSH ERA5-Land archives: approximately 14.8–15.1 GB each
-- CAMELS time-series archive: approximately 3.4 GB
+The README also states that the first three header lines contain:
 
-The CAMELS time-series ZIP supports byte-range retrieval from the Zenodo endpoint. A central-directory inspection successfully identified the expected sample-basin observed-flow and forcing files without downloading the entire archive.
+1. gauge latitude
+2. gauge elevation in meters
+3. basin area in square meters
 
-## Exceptions / limitations
+The inspected file contains `Hr = 12`, even though the archived README states that
+the hour is set to zero for daily values. The workflow will preserve the actual
+source field and treat the product as daily, rather than silently changing the
+stored value.
 
-Direct extraction of compressed members from partial ZIP downloads was not reliable because the partial archive does not contain the full compressed member data. Individual archive members therefore were not treated as directly readable from the partial tail.
+### Missing values
 
-No missing codes, field names, or quality values were invented to compensate.
+The inspected forcing README does not specify a missing-value code.
 
-## Provenance
+Therefore no NLDAS missing-value code has been assigned in the source mapping.
+Actual values will be inspected during implementation before bulk processing.
 
-Source inventory:
+---
 
-`manifests/source_inventory.csv`
+## 3. PET
 
-Outcome-blind sample:
+PET is not mapped to an independently observed source field in the inspected NLDAS
+file.
 
-`manifests/task03_sample_basins.csv`
+The project protocol derives PET using the specified Hargreaves-Samani procedure
+from temperature inputs. This is therefore recorded as a protocol-derived variable,
+not as a source variable that was observed in the NLDAS file.
 
-Canonical mapping:
+---
 
-`config/source_mapping.csv`
+## 4. SMAP SPL3SMP_E V006
 
-Task status: PASS with documented direct-sample-file inspection limitation.
+### Source
 
-Reviewer status: Pending.
+NASA SMAP Level 3 Enhanced Passive Soil Moisture Product, version 006:
+
+`SPL3SMP_E`, Version `006`
+
+Representative audited granule:
+
+`SMAP_L3_SM_P_E_20150331_R19240_001.h5`
+
+Temporal coverage of audited granule:
+
+`2015-03-31T00:00:00.000Z` through `2015-03-31T23:59:59.999Z`
+
+The AM retrieval group was used for the audit:
+
+`Soil_Moisture_Retrieval_Data_AM`
+
+### Directly verified datasets
+
+The AM group contains:
+
+- `soil_moisture`
+- `soil_moisture_error`
+- `retrieval_qual_flag`
+- `surface_flag`
+- `tb_time_seconds`
+- `tb_time_utc`
+- latitude/longitude fields
+- freeze/thaw and surface-condition fields
+
+### Soil moisture
+
+`soil_moisture`:
+
+- units: `cm**3/cm**3`
+- `_FillValue`: `-9999.0`
+- valid minimum: approximately `0.02`
+- valid maximum: `0.5`
+
+For the audited granule:
+
+- total pixels: 6,262,144
+- valid soil-moisture pixels: 87,273
+- valid percentage: 1.39366%
+- fill pixels: 6,174,871
+
+Fill values are missing and must not be treated as zero.
+
+### Soil-moisture uncertainty
+
+`soil_moisture_error`:
+
+- units: `cm**3/cm**3`
+- `_FillValue`: `-9999.0`
+- valid minimum: `0.0`
+- valid maximum: `0.2`
+
+The metadata describes this as a net uncertainty measure and states that the
+calculation method is TBD.
+
+For the audited 2015-03-31 AM granule:
+
+- valid uncertainty values: 0
+- fill values: 6,262,144
+- valid percentage: 0%
+
+Therefore the uncertainty field is unavailable in this audited granule.
+
+The workflow will NOT interpret this field as a standard deviation or variance and
+will NOT fabricate a numerical variance from it.
+
+### Retrieval quality flag
+
+`retrieval_qual_flag` is a uint16 bit-field with:
+
+- `_FillValue`: `65534`
+
+Documented flag meanings:
+
+- Retrieval_recommended
+- Retrieval_attempted
+- Retrieval_success
+- FT_retrieval_success
+
+Observed values in the audited AM granule:
+
+| Flag | Pixel count | Percentage |
+|---:|---:|---:|
+| 0 | 20,351 | 0.32% |
+| 1 | 19,125 | 0.31% |
+| 5 | 5,145 | 0.08% |
+| 7 | 5,383,658 | 85.97% |
+| 8 | 17,251 | 0.28% |
+| 9 | 14,656 | 0.23% |
+| 13 | 12,365 | 0.20% |
+| 15 | 789,593 | 12.61% |
+
+These values will be treated as bit flags and decoded according to the product
+metadata rather than interpreted as ordinary categorical numbers.
+
+### Surface flags
+
+`surface_flag` is a uint16 bit-field with `_FillValue = 65534`.
+
+The audited metadata documents flags for conditions including:
+
+- static water body
+- radar water-body detection
+- coastal proximity
+- urban area
+- precipitation
+- snow or ice
+- permanent snow or ice
+- radiometer frozen ground
+- model frozen ground
+- mountainous terrain
+- dense vegetation
+- nadir region
+
+These fields are relevant to the project's retrieval screening. Protocol-defined
+screening rules will be applied explicitly rather than treating all retrievals as
+equally usable.
+
+### Acquisition time
+
+Two acquisition-time datasets are available:
+
+`tb_time_utc`
+
+- UTC timestamp
+- arithmetic average acquisition time of brightness-temperature footprints
+- example observed timestamp:
+  `2015-03-31T20:40:12.309Z`
+
+`tb_time_seconds`
+
+- seconds since noon on January 1, 2000 UTC
+- `_FillValue = -9999.0`
+
+The workflow will retain UTC timing for temporal matching.
+
+---
+
+## 5. Sample basin selection
+
+Three deterministic CAMELS-US sample basins were inspected for outcome-blind
+sample handling:
+
+- `01013500`
+- `06278300`
+- `14400000`
+
+Selection was based on deterministic gauge-ID ordering and was not based on event
+outcomes or model performance.
+
+CAMELS-US metadata fields inspected include climate, geology, hydrology, basin
+name, soil, topography, and vegetation attributes.
+
+The standard CAMELS-US attribute files inspected do not directly provide all final
+proposal screening variables such as irrigation fraction, open-water fraction, and
+wetland fraction. These variables will therefore not be silently substituted with
+unrelated CAMELS attributes.
+
+---
+
+## 6. Source-control decisions
+
+The audit follows these rules:
+
+1. No missing-value code is invented when the source does not document one.
+2. Fill values are treated as missing, not zero.
+3. Observed discharge is distinguished from modeled or reanalysis runoff.
+4. SMAP uncertainty is not converted into a variance without documentation.
+5. SMAP retrieval and surface-condition flags are preserved as explicit quality
+   information.
+6. Actual source values are preserved when they conflict with generic README
+   statements; discrepancies are documented rather than silently corrected.
+7. Large national archives are not loaded into memory for routine inspection.
+8. Small representative files and one SMAP granule are used for direct field-level
+   verification before bulk processing.
+9. No credentials or authentication material are stored in GitHub.
+10. No source version is silently substituted.
+
+---
+
+## 7. Remaining implementation checks
+
+Before bulk processing, the following should still be explicitly tested:
+
+- NLDAS actual missing/special-value behavior across additional sample files.
+- Consistency of NLDAS field structure across the three deterministic sample basins.
+- CAMELS basin-area consistency between metadata and forcing-file headers.
+- SMAP quality-flag decoding against the V006 product documentation.
+- Temporal matching of SMAP acquisition times to daily UTC analysis dates.
+- Final source inventory completeness for all archived Zenodo files.
+
+These are implementation/audit checks and do not change the verified source mappings above.
