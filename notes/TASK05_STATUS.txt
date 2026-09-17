@@ -1,0 +1,21 @@
+TASK 05 FINAL EXPORT STATUS
+======================================================================
+Daily Q rows: 192,852
+Daily Q basins: 33
+Daily basin rows: 192,852
+Daily basin basins: 33
+Study start: 1995-01-01 00:00:00
+Study end: 2010-12-31 00:00:00
+Duplicate basin/date records: 0
+Empty outputs excluded: 0
+
+External scientific data:
+  data/daily/daily_q_33basins.parquet
+  data/daily/daily_basins_33.parquet
+
+GitHub-safe outputs:
+  tables/data_completeness_by_year.csv
+  tables/basin_by_year_availability.csv
+  manifests/task05_output_manifest.csv
+  notes/TASK05_README.md
+  figures/supplement/S01_record_availability.pdf

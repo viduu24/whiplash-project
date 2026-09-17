@@ -1,0 +1,8 @@
+output,path,exists,size_bytes,size_mb,github_policy
+daily_q,/content/drive/MyDrive/whiplash-project/data/daily/daily_q_33basins.parquet,True,1423503,1.357558,external_data
+daily_basins,/content/drive/MyDrive/whiplash-project/data/daily/daily_basins_33.parquet,True,2764249,2.636193,external_data
+daily_qc,/content/drive/MyDrive/whiplash-project/data/daily/daily_qc_33basins.csv,True,2872,0.002739,github_safe
+data_completeness,/content/drive/MyDrive/whiplash-project/tables/data_completeness.csv,True,3846,0.003668,github_safe
+data_completeness_by_year,/content/drive/MyDrive/whiplash-project/tables/data_completeness_by_year.csv,True,32589,0.031079,github_safe
+basin_by_year_availability,/content/drive/MyDrive/whiplash-project/tables/basin_by_year_availability.csv,True,9975,0.009513,github_safe
+S01,/content/drive/MyDrive/whiplash-project/figures/supplement/S01_record_availability.pdf,True,29423,0.02806,github_safe
